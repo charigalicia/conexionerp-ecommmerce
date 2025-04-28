@@ -1,5 +1,6 @@
 import {v2 as cloudinary} from "cloudinary"
 import productModel from "../models/productModel.js"
+import { syncProductToERP, deleteProductFromERP } from "../services/erpProductService.js";
 
 // funcion para añadir producto
 const addProduct = async (req,res)=>{
@@ -37,15 +38,20 @@ const addProduct = async (req,res)=>{
         
 
 
+        // Sincronizar con ERPNext
+        try {
+            await syncProductToERP(product);
+            console.log("Producto sincronizado con ERPNext correctamente");
+        } catch (erpError) {
+            console.error("Error al sincronizar con ERPNext:", erpError.message);
+            // No fallamos la operación principal si falla la sincronización
+        }
+
         res.json({success:true,message:"producto añadido"})
-
-
     } catch (error) {
         console.log(error)
         res.json ({succes:false, message:error.message})
-        
     }
-
 }
 
 // funcion para  mostrar producto
@@ -64,17 +70,25 @@ const listProducts = async (req,res)=>{
 // funcion para eliminar producto
 const removeProduct = async (req,res)=>{
     try {
+        const productId = req.body.id;
         
-        await productModel.findByIdAndDelete(req.body.id)
-        res.json({success:true,message:"Producto eliminado"})
-
-
+        // Primero, deshabilitar en ERPNext
+        try {
+            await deleteProductFromERP(productId);
+            console.log("Producto deshabilitado en ERPNext correctamente");
+        } catch (erpError) {
+            console.error("Error al deshabilitar producto en ERPNext:", erpError.message);
+            // Continuamos con la eliminación local aunque falle en ERPNext
+        }
+        
+        // Luego eliminamos de MongoDB
+        await productModel.findByIdAndDelete(productId);
+        
+        res.json({success:true,message:"Producto eliminado"});
     } catch (error){
-        console.log(error)
-        res.json ({succes:false, message:error.message})
+        console.log(error);
+        res.json({success:false, message:error.message});
     }
-    
-    
 }
 
 // funcion para info de un producto

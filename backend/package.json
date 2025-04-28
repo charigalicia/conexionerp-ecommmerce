@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "server":"nodemon server.js"
+    "server":"nodemon server.js",
+    "sync-products": "node scripts/syncAllProducts.js"
+    
   },
   "author": "",
   "license": "ISC",

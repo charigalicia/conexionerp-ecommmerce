@@ -121,6 +121,12 @@ ADMIN_PASSWORD="tu_admin_contraseña"
 
 STRIPE_SECRET_KEY="Tu_secret_key_api_stripe"
 
+ERPNEXT_URL="tu_url_erpnext"
+
+ERPNEXT_API_KEY="tu_api_key"
+
+ERPNEXT_API_SECRET="tu_api_secret"
+
  ```
 
  Ejemplo para el frontend y admin:
