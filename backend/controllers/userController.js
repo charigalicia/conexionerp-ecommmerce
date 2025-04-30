@@ -3,11 +3,14 @@ import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
 import userModel from "../models/userModel.js";
 import 'dotenv/config'
+import { syncUserToERP } from "../services/erpUserService.js";
+import { deleteUserFromERP } from "../services/erpUserService.js";
 
 
 const createToken=(id)=>{
     return jwt.sign({id},process.env.JWT_SECRET)
 }
+
 
 //Route para Ingreso Usuario
 
@@ -71,6 +74,16 @@ const registerUser = async(req,res)=>{
 
         const user=await newUser.save()
 
+                // Añadir sincronización con ERPNext
+        try {
+            await syncUserToERP(user);
+            console.log("Usuario sincronizado con ERPNext correctamente");
+        } catch (erpError) {
+            console.error("Error al sincronizar usuario con ERPNext:", erpError.message);
+            // No fallamos la operación principal si falla la sincronización
+        }
+
+
         const token= createToken(user._id)
 
         res.json({success:true,token})
@@ -108,5 +121,41 @@ const adminLogin = async(req,res)=>{
 
 }
 
+const deleteUser = async (req, res) => {
+    try {
+      const { userId } = req.body;
+      console.log('deleteUser llamado con userId:', userId);
+      
+      // Obtener email antes de eliminar
+      const user = await userModel.findById(userId);
+      console.log('Usuario encontrado:', user ? 'Sí' : 'No');
+      const userEmail = user ? user.email : null;
+      console.log('Email del usuario:', userEmail);
+      
+      // Eliminar usuario de MongoDB
+      const deleteResult = await userModel.findByIdAndDelete(userId);
+      console.log('Resultado de eliminación en MongoDB:', deleteResult ? 'Éxito' : 'Fallo');
+      
+      // Sincronizar con ERPNext
+      try {
+        console.log('Iniciando sincronización con ERPNext...');
+        const erpResult = await deleteUserFromERP(userId, userEmail);
+        console.log('Resultado de sincronización con ERPNext:', erpResult);
+      } catch (erpError) {
+        console.error('Error detallado al deshabilitar usuario en ERPNext:', erpError);
+        console.error('Mensaje de error:', erpError.message);
+        if (erpError.response) {
+          console.error('Datos de respuesta:', erpError.response.data);
+        }
+      }
+      
+      res.json({ success: true, message: "Usuario eliminado" });
+    } catch (error) {
+      console.error('Error completo:', error);
+      console.log('Mensaje de error:', error.message);
+      res.json({ success: false, message: error.message });
+    }
+  };
 
-export {loginUser, registerUser, adminLogin}
+
+export {loginUser, registerUser, adminLogin, deleteUser}

@@ -1,6 +1,8 @@
 import userModel from "../models/userModel.js";
 import orderModel from "../models/orderModel.js";
 import Stripe from 'stripe'
+import { syncOrderToERP, updateOrderStatusInERP } from "../services/erpOrderService.js";
+
 
 
 //Crear Variables globales
@@ -32,14 +34,24 @@ const placeOrder = async (req,res)=>{
 
         await userModel.findByIdAndUpdate (userId,{cart:{}})
 
-        res.json({success:true, message:"Pedido realizado"})
+        // Sincronizar con ERPNext
+        try {
+            await syncOrderToERP(newOrder);
+            console.log("Pedido sincronizado con ERPNext correctamente");
+        } catch (erpError) {
+            console.error("Error al sincronizar pedido con ERPNext:", erpError.message);
+            // No fallamos la operación principal si falla la sincronización
+        }
+
+        res.json({success: true, message: "Pedido realizado"});
         
     } catch (error) {
-        console.log(error)
-        res.json({success:false, message:error.message})
+        console.log(error);
+        res.json({success: false, message: error.message});
     }
+};
 
-}
+
 
 // Poniendo pedido usando método Stripe
 const placeOrderStripe = async (req,res)=>{
@@ -156,8 +168,16 @@ const userOrders = async (req,res)=>{
 const updateStatus = async (req,res)=>{
     try{
 
-        const {orderId, status}= req.body
-        await orderModel.findByIdAndUpdate(orderId, {status})
+        const {orderId, status}= req.body;
+        await orderModel.findByIdAndUpdate(orderId, {status});
+        // Sincronizar con ERPNext
+        try {
+            await updateOrderStatusInERP(orderId, status);
+            console.log("Estado de pedido actualizado en ERPNext correctamente");
+        } catch (erpError) {
+            console.error("Error al actualizar estado en ERPNext:", erpError.message);
+            // No fallamos la operación principal si falla la sincronización
+        }
         res.json({success:true, message:'Estado Actualizado'})
     }catch (error){
         console.log(error)

@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "server":"nodemon server.js",
-    "sync-products": "node scripts/syncAllProducts.js"
+    "sync-products": "node scripts/syncAllProducts.js",
+    "sync-users": "node scripts/syncAllUsers.js",
+    "sync-orders": "node scripts/syncAllOrders.js"
     
   },
   "author": "",
