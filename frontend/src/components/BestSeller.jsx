@@ -19,7 +19,7 @@ const BestSeller = () => {
         <div className='text-center text-3xl py-8'>
             <Title text1={'MÁS '} text2={'VENDIDO'}/>
             <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>
-            Ingresar texto necesario
+            Estos son los vinos que nuestros clientes más aprecian, auténticos tesoros avalados por la comunidad de DuVin:
             </p>
 
         </div>

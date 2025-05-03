@@ -8,14 +8,14 @@ const Footer = () => {
             <div>
                 <img src={assets.logo} className='mb-5 w-32' alt="" />
                 <p className='w-full md:w-2/3 text-gray-600'>
-                Ingresar texto necesario
+                Empresa mexicana socialmente responsable
                 </p>
                 
             </div>
 
             <div>
                 <p className='text-xl font-medium'>COMPAÑÍA</p>
-                <ul className='flex flex-col gap-1 text-gray-600'>
+                <ul className='flex flex-col gap-1 text-red-700'>
                     <li>Inicio</li>
                     <li>Nosotros</li>
                     <li>Entregas</li>
@@ -25,7 +25,7 @@ const Footer = () => {
 
             <div>
                 <p className='text-xl font-medium mb-5'>CONTÁCTANOS</p>
-                <ul className='flex flex-col gap-1 text-gray-600'>
+                <ul className='flex flex-col gap-1 text-red-700'>
                     <li>+52 1234567890</li>
                     <li>du_vinmx@gmail.com</li>
                 </ul>
@@ -35,7 +35,7 @@ const Footer = () => {
 
             <div>
                 <hr />
-                <p className='py-5 text-sm text-center'> Copyright 2024@ Equipo10 - Todos los derechos reservados</p>
+                <p className='py-5 text-sm text-center'> Copyright 2025@ Equipo10 - Todos los derechos reservados</p>
             </div>
 
         

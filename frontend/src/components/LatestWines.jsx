@@ -21,7 +21,7 @@ const LatestWines = () => {
         <div className='text-center text-3xl py-8'>
             <Title text1={'LO'} text2={' NUEVO'}/>
             <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>
-            Ingresar texto necesario
+            Descubre las últimas incorporaciones a nuestra cuidadosa selección.
             </p>
 
         </div>

@@ -16,7 +16,7 @@ const Contacto = () => {
             <p className='font-semibold text-xl text-gray-600'>Nuestra Tienda</p>
             <p className='text-gray-500'>Av. Tecnm 123 <br/> Puebla, Pue. México</p>
             <p className='text-gray-500'>Tel: (222) 1234567 <br/> email: du_vinmx@gmail.com</p>
-            <p className='font-semibold text-xl text-gray-600'>Careras en DU VIN MX</p>
+            <p className='font-semibold text-xl text-gray-600'>Careras en DuVin México</p>
             <p className='text-gray-500'>Conoce más acerca de nuestro equipo y oportunidades de trabajo</p>
             <button className='border border-black px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500'>Explora empleos</button>
 
