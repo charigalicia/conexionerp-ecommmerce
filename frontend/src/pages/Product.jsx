@@ -82,8 +82,8 @@ const Product = () => {
           <p className='border px-5 py-3 text-sm'>Reseñas (122)</p>
         </div>
         <div className='flex flex-col gap-4border px-6 py-6 text-sm teext-gray.500'>
-          <p>Ingresar texto necesario</p>
-          <p>Ingresar texto necesario</p>
+          <p>Vino de calidad</p>
+          <p>Vinos Internacionales</p>
 
           {/* ---------mostrar productos relacionados */}
           <RelatedProducts category={productData.category} subCategory={productData.subCategory}/>

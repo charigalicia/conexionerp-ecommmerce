@@ -32,7 +32,7 @@ async function syncProductToERP(product) {
       item_group: "Vinos", // Asegúrate que este grupo exista en ERPNext
       description: product.description,
       is_stock_item: 1,
-      stock_uom: "Unidad(es)",
+      stock_uom: "Unit",
       standard_rate: product.price,
       // Guardamos la categoría original como campos personalizados
       category: product.category,

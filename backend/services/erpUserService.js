@@ -31,7 +31,7 @@ async function syncUserToERP(user) {
         customer_name: customerName,
         customer_type: "Individual",
         customer_group: "Individual", // Asegúrate que este grupo exista en ERPNext
-        territory: "Todos los territorios", // Asegúrate que este territorio exista
+        territory: "All Territories", // Asegúrate que este territorio exista
         email_id: user.email,
       };
       
