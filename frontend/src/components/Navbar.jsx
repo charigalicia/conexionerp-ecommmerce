@@ -72,7 +72,7 @@ const Navbar = () => {
         </div>
         <NavLink onClick={()=>setVisible(true)}className='py-2 pl-6 border' to='/'>INICIO</NavLink>
         <NavLink onClick={()=>setVisible(true)}className='py-2 pl-6 border' to='/vinos'>VINOS</NavLink>
-        <NavLink onClick={()=>setVisible(true)}className='py-2 pl-6 border' to='/nostros'>NOSOTROS</NavLink>
+        <NavLink onClick={()=>setVisible(true)}className='py-2 pl-6 border' to='/nosotros'>NOSOTROS</NavLink>
         <NavLink onClick={()=>setVisible(true)}className='py-2 pl-6 border' to='/contacto'>CONTACTO</NavLink>
       </div>
 
